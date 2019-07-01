@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_working_hours"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="9dp"
+    android:clickable="true"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+    <TextView
+        android:id="@+id/text_label_working_hours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Режим работы"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="40dp" />
+
+    <TextView
+        android:id="@+id/text_working_hours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/workingHours"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_label_working_hours"
+        tools:text="11:00 - 23:00"
+        android:layout_marginLeft="40dp" />
+
+    <TextView
+        android:id="@+id/text_branch_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/branchOpened"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/text_working_hours"
+        app:layout_constraintTop_toBottomOf="@+id/text_label_working_hours"
+        tools:text="Открыто"
+        android:layout_marginLeft="16dp" />
+
+    <ImageButton
+        android:id="@+id/btn_working_hours"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="8dp"
+        android:background="#00000000"
+
+        android:src="@drawable/arrow_open"
+        app:layout_constraintBottom_toTopOf="@+id/container_working_hours_opened"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="40dp" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/container_working_hours_opened"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_working_hours">
+
+        <TextView
+            android:id="@+id/text_monday"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Понедельник"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="40dp" />
+
+        <TextView
+            android:id="@+id/text_tuesday"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Вторник"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_monday"
+            android:layout_marginLeft="40dp" />
+
+        <TextView
+            android:id="@+id/text_wednesday"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="8dp"
+            android:text="Среда"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_tuesday"
+            android:layout_marginLeft="40dp" />
+
+        <TextView
+            android:id="@+id/text_thursday"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="8dp"
+            android:text="Четверг"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_wednesday"
+            android:layout_marginLeft="40dp" />
+
+        <TextView
+            android:id="@+id/text_friday"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="8dp"
+            android:text="Пятница"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_thursday"
+            android:layout_marginLeft="40dp" />
+
+        <TextView
+            android:id="@+id/text_saturday"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="8dp"
+            android:text="Суббота"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_friday"
+            android:layout_marginLeft="40dp" />
+
+        <TextView
+            android:id="@+id/text_sunday"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="8dp"
+            android:text="Воскресенье"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_saturday"
+            android:layout_marginLeft="40dp" />
+
+        <TextView
+            android:id="@+id/text_monday_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toEndOf="@+id/text_monday"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="10:00 - 00:00"
+            android:layout_marginLeft="50dp" />
+
+        <TextView
+            android:id="@+id/text_tuesday_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toEndOf="@+id/text_tuesday"
+            app:layout_constraintTop_toBottomOf="@+id/text_monday_hours"
+            tools:text="10:00 - 00:00"
+            android:layout_marginLeft="50dp" />
+
+        <TextView
+            android:id="@+id/text_wednesday_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/text_wednesday"
+            app:layout_constraintTop_toBottomOf="@+id/text_tuesday_hours"
+            tools:text="10:00 - 00:00"
+            android:layout_marginLeft="50dp" />
+
+        <TextView
+            android:id="@+id/text_thursday_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/text_thursday"
+            app:layout_constraintTop_toBottomOf="@+id/text_wednesday_hours"
+            tools:text="10:00 - 00:00"
+            android:layout_marginLeft="50dp" />
+
+        <TextView
+            android:id="@+id/text_friday_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/text_friday"
+            app:layout_constraintTop_toBottomOf="@+id/text_thursday_hours"
+            tools:text="10:00 - 00:00"
+            android:layout_marginLeft="50dp" />
+
+        <TextView
+            android:id="@+id/text_saturday_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/text_saturday"
+            app:layout_constraintTop_toBottomOf="@+id/text_friday_hours"
+            tools:text="10:00 - 00:00"
+            android:layout_marginLeft="50dp" />
+
+        <TextView
+            android:id="@+id/text_sunday_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/text_sunday"
+            app:layout_constraintTop_toBottomOf="@+id/text_saturday_hours"
+            tools:text="10:00 - 00:00"
+            android:layout_marginLeft="50dp" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</android.support.constraint.ConstraintLayout>

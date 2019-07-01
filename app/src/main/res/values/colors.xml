@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="branchName">#DE000000</color>
+    <color name="cashbackInfo">#417505</color>
+    <color name="addressLabel">#DE464545</color>
+    <color name="addressText">#DE000000</color>
+    <color name="workingHours">#DE000000</color>
+    <color name="branchOpened">#417505</color>
+    <color name="branchClosed">#E00909</color>
+    <color name="line">#F1F1F1</color>
+    <color name="branches">#DE000000</color>
+    <color name="text_branches_count">#DE464545</color>
+    <color name="seeAllReviews">#FB3353</color>
+    <color name="tag">#000000</color>
+    <color name="phoneNumberColor">#DE000000</color>
+</resources>
