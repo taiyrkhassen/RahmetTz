@@ -1,5 +1,6 @@
 package com.example.rahmetapptz.mvp;
 
+import android.nfc.Tag;
 import android.util.Log;
 
 import com.example.rahmetapptz.DateUtils;
@@ -26,7 +27,7 @@ import io.reactivex.schedulers.Schedulers;
 import rx.Scheduler;
 import rx.Scheduler;
 public class BranchesPresenter<V extends BranchesContract.View>
-        implements BranchesContract.Presenter{
+        implements BranchesContract.Presenter<V>{
     private V mView;
     private BranchesContract.Model mModel;
 
@@ -54,8 +55,8 @@ public class BranchesPresenter<V extends BranchesContract.View>
 
 
     @Override
-    public void attachView(BaseView view) {
-        mView = (V) view;
+    public void attachView(V view) {
+        mView = view;
     }
 
     @Override

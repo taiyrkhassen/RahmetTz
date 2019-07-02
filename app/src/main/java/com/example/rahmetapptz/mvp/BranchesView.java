@@ -1,17 +1,28 @@
 package com.example.rahmetapptz.mvp;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.rahmetapptz.ImageSliderAdapter;
 import com.example.rahmetapptz.R;
 import com.example.rahmetapptz.days.WeekDay;
+import com.example.rahmetapptz.net.RahmetAPI;
+import com.example.rahmetapptz.net.WebBranchInfo;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +30,12 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import me.gujun.android.taggroup.TagGroup;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BranchesView extends AppCompatActivity implements BranchesContract.View {
     // textviews
@@ -56,7 +73,6 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
     @BindView(R.id.container_working_hours_opened) ViewGroup mContainerWorkingHours;
     @BindView(R.id.container_tags) ViewGroup mContainerTags;
     @BindView(R.id.container_phone_numbers) ViewGroup mContainerPhoneNumbers;
-
     @BindView(R.id.image_instagram) ImageView mImgInstagram;
     @BindView(R.id.image_vk) ImageView mImgVk;
     @BindView(R.id.image_youtube) ImageView mImgYoutube;
@@ -64,7 +80,7 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
     @BindView(R.id.image_twitter) ImageView mImgTwitter;
     @BindView(R.id.btn_working_hours)
     ImageButton mImgBtnWorkingHours;
-
+    RahmetAPI rahmetAPI;
     List<ImageView> socialNetworks;
     BranchesContract.Presenter<BranchesContract.View> mPresenter;
     ImageSliderAdapter imageSliderAdapter;
@@ -74,6 +90,7 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
     Intent vkIntent;
     Intent youtubeIntent;
     Intent instagramIntent;
+    Retrofit retrofit;
 
     @BindView(R.id.view_pager_images) ViewPager mViewPagerImages;
     List<TextView> mListWeekDays;
@@ -95,7 +112,9 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
                 add(mTxtSunday);
             }
         };
-        mPresenter = new BranchesPresenter<>(this, new BranchesModel()); //?(
+
+
+
         socialNetworks = new ArrayList<ImageView>() {
             {
                 add(mImgVk);
@@ -105,6 +124,14 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
                 add(mImgFacebook);
             }
         };
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://gateway.choco.kz")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+        rahmetAPI = retrofit.create(RahmetAPI.class);
+
+        mPresenter = new BranchesPresenter<>(this, new BranchesModel(new WebBranchInfo(rahmetAPI)));
 
         facebookIntent = new Intent();
         vkIntent = new Intent();
@@ -148,81 +175,228 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
 
     @Override
     public void showBranchName(String name) {
-
+        mTxtBranchName.setText(name);
     }
 
     @Override
     public void showBranchCashback(String cashback) {
-
+        mTxtBranchCashbackInfo.setText(cashback);
     }
 
     @Override
     public void showBranchAddress(String address) {
-
+        mTxtBranchAddress.setText(address);
     }
 
     @Override
     public void showBranchTodaysWorkingHours(String todaysWorkingHours) {
-
+        mTxtBranchWorkingHours.setText(todaysWorkingHours);
     }
 
     @Override
     public void showBranchPhoneNumbers(List<String> phoneNumber) {
-
+        LinearLayout.LayoutParams linearLayout = new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        linearLayout.setMargins(0,10,0,0);
+        if(phoneNumber.size()==0){
+            phoneNumber.add("No phone!");
+        }
+        for(String phones : phoneNumber){
+            TextView textViewNumber  =new TextView(this);
+            textViewNumber.setLayoutParams(linearLayout);
+            textViewNumber.setTextColor(getResources().getColor(R.color.phoneNumberColor));
+            textViewNumber.setText(phones);
+            mContainerPhoneNumbers.addView(textViewNumber);
+        }
     }
 
     @Override
     public void showBranchWebSite(String webSite) {
-
+        mTxtBranchWebSite.setText(webSite);
     }
 
     @Override
     public void showBranchRating(float rating) {
-
+        mTxtBranchRating.setText(String.valueOf(rating));
     }
 
     @Override
     public void showBranchLogo(String urlLogo) {
-
+        Picasso.with(this).load(urlLogo).into(mImgBranchLogo);  // download image and draw
     }
 
     @Override
     public void showBranchWeekWorkingHours(List<String> weekSchedule) {
-
+        String currentWorkHours;
+        for(int i=0; i<weekSchedule.size(); i++){
+            currentWorkHours = weekSchedule.get(i);
+            mListWeekDays.get(i).setText(currentWorkHours);
+            currentWorkHours="";
+        }
     }
 
     @Override
     public void setBranchRegime(boolean isBranchOpen) {
-
+        String branchRegime = isBranchOpen ? "Открыто" : "Закрыто";
+        int color = isBranchOpen ? Color.GREEN : Color.RED;
+        mTxtBranchMode.setTextColor(color);
+        mTxtBranchMode.setText(branchRegime);
     }
 
     @Override
     public void showBranchTags(List<String> tags) {
-
+        TextView txt = new TextView(this);
+        txt.setText("Nothing");
+        mContainerTags.setTag(new String[]{"Tag1", "Tag2", "Tag3"});
+        if(tags.size()==0){
+            mContainerTags.setTag("Nothing");
+        }
+        for(String tag : tags){
+            mContainerTags.setTag(tag);
+        }
     }
 
     @Override
     public void showBranchCounter(String count) {
+        mTxtBranchesCounter.setText(count);
 
     }
 
     @Override
     public void showReviewsCounter(String count) {
-
+        mTxtReviewsCounter.setText(count);
     }
 
     @Override
     public void setSocialNetworks(Map<String, String> socialNetworksUrl) {
+        for(ImageView view : socialNetworks){
+            view.setVisibility(View.GONE);
+        }
+        for(Map.Entry<String, String> mapEntry : socialNetworksUrl.entrySet()){
+            String url = mapEntry.getValue();
+            String name = mapEntry.getKey();
+            if(url==null){
+                continue;
+            }
+            switch(name.toLowerCase()){
+                case "vk":
+                    mImgVk.setVisibility(View.VISIBLE);
+                    vkIntent.setData(Uri.parse(url));   // ssylka na site
+                case "youtube":
+                    mImgYoutube.setVisibility(View.VISIBLE);
+                    youtubeIntent.setData(Uri.parse(url));
+                case "instagram":
+                    mImgInstagram.setVisibility(View.VISIBLE);
+                    instagramIntent.setData(Uri.parse(url));   // ssylka na site
+                case "facebook":
+                    mImgFacebook.setVisibility(View.VISIBLE);
+                    facebookIntent.setData(Uri.parse(url));
+                case "twitter":
+                    mImgTwitter.setVisibility(View.VISIBLE);
+                    twitterIntent.setData(Uri.parse(url));
+            }
 
+        }
     }
 
     @Override
     public void selectCurrentDay(WeekDay currentDay) {
-
+        TextView currentDayView;
+        TextView currentDayLabelView;
+        switch (currentDay) {
+            case MONDAY:
+                currentDayView = mTxtMonday;
+                currentDayLabelView = mTxtMondayLabel;
+                break;
+            case TUESDAY:
+                currentDayView = mTxtTuesday;
+                currentDayLabelView = mTxtTuesdayLabel;
+                break;
+            case WEDNESDAY:
+                currentDayView = mTxtWednesday;
+                currentDayLabelView = mTxtWednesdayLabel;
+                break;
+            case THURSDAY:
+                currentDayView = mTxtThursday;
+                currentDayLabelView = mTxtThursdayLabel;
+                break;
+            case FRIDAY:
+                currentDayView = mTxtFriday;
+                currentDayLabelView = mTxtFridayLabel;
+                break;
+            case SATURDAY:
+                currentDayView = mTxtSaturday;
+                currentDayLabelView = mTxtSaturdayLabel;
+                break;
+            case SUNDAY:
+                currentDayView = mTxtSunday;
+                currentDayLabelView = mTxtSundayLabel;
+                break;
+            default:
+                currentDayView = mTxtMonday;
+                currentDayLabelView = mTxtMondayLabel;
+                break;
+        }
+        currentDayView.setTypeface(null, Typeface.BOLD);
+        currentDayView.setTextColor(Color.BLACK);
+        currentDayView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        currentDayLabelView.setTypeface(null, Typeface.BOLD);
+        currentDayLabelView.setTextColor(Color.BLACK);
+        currentDayLabelView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
     }
 
     @Override
     public void showErrorMessage(String errorMessage) {
+            Log.d("sds", errorMessage);
+    }
+
+
+
+    @OnClick({R.id.image_facebook, R.id.image_vk, R.id.image_twitter, R.id.image_instagram,
+            R.id.image_youtube})
+    void onSocialNetworkClick(View view){
+        switch (view.getId()){
+            case R.id.image_youtube:
+                startActivity(youtubeIntent);
+                break;
+            case R.id.image_twitter:
+                startActivity(twitterIntent);
+                break;
+            case R.id.image_instagram:
+                startActivity(instagramIntent);
+                break;
+            case R.id.image_vk:
+                startActivity(vkIntent);
+                break;
+            case R.id.image_facebook:
+                startActivity(facebookIntent);
+                break;
+
+
+        }
+    }
+    @OnClick({R.id.container_working_hours, R.id.container_branches, R.id.container_reviews})
+    void OnClick(View view){
+        int visibleMode = view.getVisibility();
+        switch (view.getId()){
+            case R.id.container_working_hours:
+                visibleMode = findViewById(R.id.container_working_hours_opened).getVisibility();
+                if(visibleMode==View.GONE){
+                    visibleMode = View.VISIBLE;
+                } else {
+                    visibleMode = View.GONE;
+                }
+                Drawable image;
+                if(visibleMode==View.GONE){
+                    image = getResources().getDrawable(R.drawable.arrow_open);
+                }else{
+                    image = getResources().getDrawable(R.drawable.arrow_close);
+                }
+                mImgBtnWorkingHours.setImageDrawable(image);
+                mContainerWorkingHours.setVisibility(visibleMode);
+                break;
+        }
+
 
     }
 }
