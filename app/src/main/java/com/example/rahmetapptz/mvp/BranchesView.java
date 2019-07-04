@@ -71,7 +71,7 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
 
     // containers
     @BindView(R.id.container_working_hours_opened) ViewGroup mContainerWorkingHours;
-    @BindView(R.id.container_tags) ViewGroup mContainerTags;
+    @BindView(R.id.container_tags) TagGroup mContainerTags;
     @BindView(R.id.container_phone_numbers) ViewGroup mContainerPhoneNumbers;
     @BindView(R.id.image_instagram) ImageView mImgInstagram;
     @BindView(R.id.image_vk) ImageView mImgVk;
@@ -162,7 +162,7 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
         imageSliderAdapter = new ImageSliderAdapter(this);
 
         imageSliderAdapter.setImagesUrl(mImagesUrl);
-        mPresenter.getBranchInfo(114);
+        mPresenter.getBranchInfo(158);
         Log.d("test", "asd");
         mViewPagerImages.setAdapter(imageSliderAdapter);
 
@@ -250,7 +250,11 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
 
     @Override
     public void showBranchTags(List<String> tags) {
-        mContainerTags.setTag(new String[]{"Tag1", "Tag2", "Tag3"});
+        mContainerTags.setTags(tags);
+        /*for(String tag : tags){
+            mContainerTags.setTag(tag);
+        }*/
+        Log.d("test", mContainerTags.getChildAt(0).toString()+"");
     }
 
     @Override
