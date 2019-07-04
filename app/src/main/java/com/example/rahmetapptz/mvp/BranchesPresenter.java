@@ -44,7 +44,11 @@ public class BranchesPresenter<V extends BranchesContract.View>
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    this::getThisBranch, // this  ssylka na danny metod
+                        b -> {
+                                Log.d("f", "subsc");
+                                //(e)->getThisBranch(e)
+                                getThisBranch(b); // this ssylka na danny metod
+                        },
                         error -> Log.d("Error", error.getLocalizedMessage() + " " + error.getCause()),
                         () -> Log.d("success", "completed")
                 );   /* new DisposableObserver<MainObject>() {  // tak kak observable prinimaet objects MainObject
@@ -53,6 +57,7 @@ public class BranchesPresenter<V extends BranchesContract.View>
                         @Override public void onError(Throwable t) { … }*/ // oshibka peredaetsya
     }
 
+    public void f(MainObject m){}
 
     @Override
     public void attachView(V view) {
@@ -65,6 +70,7 @@ public class BranchesPresenter<V extends BranchesContract.View>
     }
 
     private void getThisBranch(MainObject mainObject){
+        Log.d("test", "getThisBranch");
         Data data = mainObject.getData();
         String name     = data.getName();
         String cashback = "Кэшбэк " + data.getRule().getCashback() + "%";
@@ -85,11 +91,13 @@ public class BranchesPresenter<V extends BranchesContract.View>
         WeekDay currentDay             = WeekDay.values()[DateUtils.getCurrentDayOfWeek()-1];
         SocialNetworks socialNetworks         = data.getPartner().getSocialNetworks();
         Map<String, String> mapSocialNetworks = new HashMap<>();
+        Log.d("test", name + "1");
         if(socialNetworks != null)
             mapSocialNetworks = mapToSocialNetworks();
         webSite = webSite == null ? "Веб сайт не указан" : webSite;
-
+        Log.d("test", name + "2");
         mView.showBranchImages(imagesUrl);
+        Log.d("test", name + "3");
         mView.showBranchName(name);
         mView.showBranchCashback(cashback);
         mView.showBranchAddress(address);
@@ -150,11 +158,18 @@ public class BranchesPresenter<V extends BranchesContract.View>
 
     private Map<String, String> mapToSocialNetworks() {
         Map<String, String> mapSocialNetworks = new HashMap<>();
-        mapSocialNetworks.put("instagram", socialNetworks.getInstagram());
-        mapSocialNetworks.put("vk", socialNetworks.getVk());
-        mapSocialNetworks.put("youtube", socialNetworks.getYoutube());
-        mapSocialNetworks.put("twitter", socialNetworks.getTwitter());
-        mapSocialNetworks.put("facebook", socialNetworks.getFacebook());
+        if(socialNetworks != null) {
+            if(socialNetworks.getInstagram() != null)
+                mapSocialNetworks.put("instagram", socialNetworks.getInstagram());
+            if(socialNetworks.getVk() != null)
+                mapSocialNetworks.put("vk", socialNetworks.getVk());
+            if(socialNetworks.getYoutube() != null)
+                mapSocialNetworks.put("youtube", socialNetworks.getYoutube());
+            if(socialNetworks.getTwitter() != null)
+                mapSocialNetworks.put("twitter", socialNetworks.getTwitter());
+            if(socialNetworks.getFacebook() != null)
+                mapSocialNetworks.put("facebook", socialNetworks.getFacebook());
+        }
         return mapSocialNetworks;
     }
 

@@ -10,5 +10,6 @@ import retrofit2.http.Path;
 public interface RahmetAPI {
 
     @GET("/partner/v2/filials/card/id/{id}")
+    //Call<MainObject> getBranchesInfo(@Path("id") int branchId);
     Observable<MainObject> getBranchesInfo(@Path("id") int branchId);
 }

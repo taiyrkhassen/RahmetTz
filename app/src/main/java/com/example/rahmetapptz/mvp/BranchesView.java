@@ -101,6 +101,9 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_branch);
         ButterKnife.bind(this);
+        Log.d("test3", "getbranch");
+        Log.d("TEST", "TURN INTO onCreate");
+
         mListWeekDays = new ArrayList<TextView>(){
             {
                 add(mTxtMonday);
@@ -120,7 +123,7 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
                 add(mImgVk);
                 add(mImgInstagram);
                 add(mImgYoutube);
-                add(mImgTwitter);
+                  add(mImgTwitter);
                 add(mImgFacebook);
             }
         };
@@ -131,7 +134,8 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
                 .build();
         rahmetAPI = retrofit.create(RahmetAPI.class);
 
-        mPresenter = new BranchesPresenter<>(this, new BranchesModel(new WebBranchInfo(rahmetAPI)));
+        mPresenter = new BranchesPresenter<>(this,
+                new BranchesModel(new WebBranchInfo(rahmetAPI)));
 
         facebookIntent = new Intent();
         vkIntent = new Intent();
@@ -158,12 +162,12 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
         imageSliderAdapter = new ImageSliderAdapter(this);
 
         imageSliderAdapter.setImagesUrl(mImagesUrl);
+        mPresenter.getBranchInfo(114);
+        Log.d("test", "asd");
         mViewPagerImages.setAdapter(imageSliderAdapter);
 
-        mPresenter.getBranchInfo(157);
+
     }
-
-
 
     @Override
     public void showBranchImages(List<String> imagesUrl) {
@@ -175,6 +179,7 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
 
     @Override
     public void showBranchName(String name) {
+        Log.d("name", name);
         mTxtBranchName.setText(name);
     }
 
@@ -217,7 +222,7 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
 
     @Override
     public void showBranchRating(float rating) {
-        mTxtBranchRating.setText(String.valueOf(rating));
+        mTxtBranchRating.setText(rating+"");
     }
 
     @Override
@@ -245,15 +250,7 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
 
     @Override
     public void showBranchTags(List<String> tags) {
-        TextView txt = new TextView(this);
-        txt.setText("Nothing");
         mContainerTags.setTag(new String[]{"Tag1", "Tag2", "Tag3"});
-        if(tags.size()==0){
-            mContainerTags.setTag("Nothing");
-        }
-        for(String tag : tags){
-            mContainerTags.setTag(tag);
-        }
     }
 
     @Override
@@ -397,6 +394,11 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
                 break;
         }
 
+
+    }
+    @OnClick({R.id.btn_view_all_reviews})
+    void onClickBtn(View view){
+        Log.d("TEST2", "work");
 
     }
 }
