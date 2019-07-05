@@ -77,6 +77,8 @@ public class BranchesPresenter<V extends BranchesContract.View>
         String address  = data.getAddress().getAddress();
         String webSite  = data.getPartner().getWebsiteUrl();
         String logoUrl  = data.getPartner().getLogotypeUrl();
+        Double cordLat = data.getAddress().getCoordLat();
+        Double cordLng = data.getAddress().getCoordLng();
         float rating                  = data.getRating().getMark();
         List<Regime> listRegime       = data.getRegime();
         List<String> weekWorkingHours = weekWorkHours(data.getRegime());
@@ -113,6 +115,7 @@ public class BranchesPresenter<V extends BranchesContract.View>
         mView.showReviewsCounter(String.valueOf(reviewsCounter));
         mView.setSocialNetworks(mapSocialNetworks);
         mView.selectCurrentDay(currentDay);
+        mView.setCoordinate(cordLng,cordLat);
 
     }
 

@@ -78,6 +78,7 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
     @BindView(R.id.image_youtube) ImageView mImgYoutube;
     @BindView(R.id.image_facebook) ImageView mImgFacebook;
     @BindView(R.id.image_twitter) ImageView mImgTwitter;
+    @BindView(R.id.imageView) ImageView mImgMap;
     @BindView(R.id.btn_working_hours)
     ImageButton mImgBtnWorkingHours;
     RahmetAPI rahmetAPI;
@@ -95,6 +96,7 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
     @BindView(R.id.view_pager_images) ViewPager mViewPagerImages;
     List<TextView> mListWeekDays;
     List<String> mImagesUrl;
+    Double coorlat, coorlng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +164,7 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
         imageSliderAdapter = new ImageSliderAdapter(this);
 
         imageSliderAdapter.setImagesUrl(mImagesUrl);
-        mPresenter.getBranchInfo(158);
+        mPresenter.getBranchInfo(114);
         Log.d("test", "asd");
         mViewPagerImages.setAdapter(imageSliderAdapter);
 
@@ -347,6 +349,13 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
     }
 
     @Override
+    public void setCoordinate(double lng, double lat){
+        coorlng = lng;
+        coorlat = lat;
+
+    }
+
+    @Override
     public void showErrorMessage(String errorMessage) {
             Log.d("sds", errorMessage);
     }
@@ -400,6 +409,12 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
 
 
     }
+    @OnClick({R.id.imageView})
+    void onClickMap(ImageView imageView){
+        Log.d("test", "clickMap");
+
+    }
+
     @OnClick({R.id.btn_view_all_reviews})
     void onClickBtn(View view){
         Log.d("TEST2", "work");

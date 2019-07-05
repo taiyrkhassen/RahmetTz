@@ -28,6 +28,8 @@ public interface BranchesContract {
         void showReviewsCounter(String count);
         void setSocialNetworks(Map<String, String> socialNetworksUrl);
         void selectCurrentDay(WeekDay currentDay);
+
+        void setCoordinate(double lng, double lat);
     }
 
     interface Presenter<V extends BaseView> extends BasePresenter<V>{

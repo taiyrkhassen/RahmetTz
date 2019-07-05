@@ -1,105 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.motion.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/scroll_view"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/motion_layout"
+    app:layoutDescription="@xml/motion_toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/layout_root"
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager_images"
         android:layout_width="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_height="match_parent">
+        android:layout_height="178dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager_images"
-            android:layout_width="match_parent"
-            android:layout_height="178dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </android.support.v4.view.ViewPager>
+    <TextView
+        android:id="@+id/text_count_images"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="10/10" />
 
-        <TextView
-            android:id="@+id/text_count_images"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="28dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="10/10"
-            android:layout_marginRight="28dp" />
+    <TextView
+        android:id="@+id/text_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/circle_rating"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/view_pager_images"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.103"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_pager_images"
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="4.6" />
 
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/view_pager_images"
+        android:id="@+id/text_branch_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="28dp"
+        android:textColor="@color/branchName"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Ros Petrol" />
 
+    <ImageView
+        android:id="@+id/image_branch_logo"
+        android:layout_width="105dp"
+        android:layout_height="92dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_pager_images"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/text_branch_name"
+        android:id="@+id/text_branch_cashback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/cashbackInfo"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/text_branch_name"
+        tools:ignore="MissingConstraints"
+        tools:text="Кэшбек 20%" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_branch_cashback"
+        android:id="@+id/scroll_view">
 
         <android.support.constraint.ConstraintLayout
-
             android:id="@+id/layout_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="160dp"
-            android:background="@drawable/round_branch_layout"
+            android:layout_marginTop="10dp"
+            android:clipToPadding="true"
+            android:paddingBottom="110dp">
 
-            app:layout_constraintBottom_toBottomOf="@id/layout_root"
-            app:layout_constraintBottom_toTopOf="@+id/view_pager_images"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/layout_root"
-            app:layout_constraintVertical_bias="0.0">
-
-
-            <TextView
-                android:id="@+id/text_branch_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="28dp"
-                android:maxWidth="170dp"
-                android:textColor="@color/branchName"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Ros Petrol" />
-
-            <ImageView
-                android:id="@+id/image_branch_logo"
-                android:layout_width="105dp"
-                android:layout_height="92dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="12dp"
-
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:scaleType="fitXY"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.918"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/text_branch_cashback"
-                android:layout_width="71dp"
-                android:layout_height="17dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="36dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:textColor="@color/cashbackInfo"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toStartOf="@+id/image_branch_logo"
-                app:layout_constraintHorizontal_bias="0.168"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/text_branch_name"
-                tools:ignore="MissingConstraints"
-                tools:text="Кэшбек 20%" />
 
             <TextView
                 android:id="@+id/text_label_address"
@@ -112,7 +108,7 @@
                 android:textColor="@color/addressLabel"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_branch_cashback" />
+                app:layout_constraintTop_toTopOf="@+id/text_branch_cashback" />
 
             <TextView
                 android:id="@+id/text_address"
@@ -143,7 +139,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/image_branch_logo"
                 app:srcCompat="@drawable/map" />
 
-            <include layout="@layout/container_working_hours" />
+            <include
+                layout="@layout/container_working_hours" />
 
             <View
                 android:id="@+id/view"
@@ -159,7 +156,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/container_working_hours" />
 
-            <include layout="@layout/container_branches_info" />
+            <include
+                layout="@layout/container_branches_info" />
 
             <View
                 android:id="@+id/view2"
@@ -189,8 +187,7 @@
                 android:layout_marginRight="29dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/container_reviews"/>
-
+                app:layout_constraintTop_toBottomOf="@+id/container_reviews" />
 
 
             <Button
@@ -256,7 +253,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_tags"
-                tools:ignore="MissingConstraints"/>
+                tools:ignore="MissingConstraints" />
 
             <View
                 android:id="@+id/view4"
@@ -365,32 +362,11 @@
                 android:textColor="#454545"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/container_social_networks" />
 
         </android.support.constraint.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/text_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/circle_rating"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/view_pager_images"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.103"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/view_pager_images"
-            app:layout_constraintVertical_bias="1.0"
-            tools:text="4.6" />
-
-
-    </android.support.constraint.ConstraintLayout>
-</ScrollView>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.constraint.motion.MotionLayout>
