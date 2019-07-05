@@ -420,4 +420,9 @@ public class BranchesView extends AppCompatActivity implements BranchesContract.
         Log.d("TEST2", "work");
 
     }
+    @OnClick({R.id.imageView})
+    void onClickMap(){
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("geo:${"+coorlat+"}, ${"+coorlng+"}")));
+
+    }
 }
